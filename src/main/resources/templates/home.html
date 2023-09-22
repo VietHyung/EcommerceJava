@@ -1,74 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="base::layout(~{::section})">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
-    <!-- Link to Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Link to your custom CSS file -->
-    <link rel="stylesheet" href="/static/css/styles.css">
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+
 </head>
 <body>
-<header>
-    <!-- Bootstrap Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Your Website</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/auth/login}">Login</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</header>
 
-<div class="container mt-5">
-    <h1>Welcome to the Home Page!</h1>
-    <h2 th:text="'Thymeleaf ' + ${message} + ' App'"></h2>
-</div>
+	<section>
+		<h1>Home Page</h1>
 
-<footer class="bg-light mt-5">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <h3>Contact Us</h3>
-                <address>
-                    123 Street, City<br>
-                    Country<br>
-                    Email: example@example.com<br>
-                    Phone: +1 234 567 890
-                </address>
-            </div>
-            <div class="col">
-                <h3>Follow Us</h3>
-                <ul class="list-inline">
-                    <li class="list-inline-item"><a href="#">Facebook</a></li>
-                    <li class="list-inline-item"><a href="#">Twitter</a></li>
-                    <li class="list-inline-item"><a href="#">Instagram</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</footer>
+	</section>
 
-<!-- Link to Bootstrap JS (jQuery required) -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

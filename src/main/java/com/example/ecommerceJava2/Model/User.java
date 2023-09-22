@@ -39,6 +39,11 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Column(name = "enable")
+    private boolean enable;
+
+    private String verificationCode;
+
     @Column(name = "created_at", nullable = false)
     private Date createdAt;
 
