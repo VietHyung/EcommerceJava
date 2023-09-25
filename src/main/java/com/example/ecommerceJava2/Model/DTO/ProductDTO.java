@@ -1,16 +1,21 @@
 package com.example.ecommerceJava2.Model.DTO;
 
+import lombok.Data;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.Date;
 
-public class productDTO {
+@Data
+public class ProductDTO {
     private Long productId;
     private String name;
     private String description;
     private String productImage;
     private BigDecimal price;
     private int quantity;
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
-    private Long categoryId;
+    private Date createdAt;
+    private Date updatedAt;
+    private String categoryName;
+
 }

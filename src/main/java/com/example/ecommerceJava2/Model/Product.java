@@ -57,4 +57,5 @@ public class Product {
     protected void onUpdate() {
         updatedAt = new Date();
     }
+
 }

@@ -1,8 +1,14 @@
 package com.example.ecommerceJava2.Controller;
 
+import com.example.ecommerceJava2.Model.Category;
+import com.example.ecommerceJava2.Model.DTO.CategoryDTO;
+import com.example.ecommerceJava2.Model.Product;
 import com.example.ecommerceJava2.Model.Role;
 import com.example.ecommerceJava2.Model.User;
+import com.example.ecommerceJava2.Repository.CategoryRepository;
+import com.example.ecommerceJava2.Repository.ProductRepository;
 import com.example.ecommerceJava2.Repository.UserRepository;
+import com.example.ecommerceJava2.Service.CategoryService;
 import com.example.ecommerceJava2.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -19,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
+import java.util.List;
 
 
 @Controller
@@ -27,7 +34,16 @@ public class homeController {
     private UserService userService;
 
     @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
     private UserRepository userRepo;
+
+    @Autowired
+    private CategoryRepository categoryRepo;
+
+    @Autowired
+    private ProductRepository productRepo;
 
     @ModelAttribute
     public void commonUser(Principal p, Model m) {
@@ -39,7 +55,12 @@ public class homeController {
     }
 
     @GetMapping("/")
-    public String index() {
+    public String index(Model m) {
+
+        List<Product> products = this.productRepo.getProducts();
+        List<CategoryDTO> categories = this.categoryService.getAllCategories();
+        m.addAttribute("categories", categories);
+        m.addAttribute("products", products);
         return "index";
     }
 
@@ -65,7 +86,7 @@ public class homeController {
             }
 
         }
-        m.addAttribute("title", "Login | StoreWala");
+        m.addAttribute("title", "Login | StoreWall");
         return "login";
     }
 
@@ -99,4 +120,6 @@ public class homeController {
 
         return "message";
     }
+
+
 }

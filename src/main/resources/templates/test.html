@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="base::layout(~{::section})">
+<head>
+<meta charset="UTF-8">
+<title> title </title>
+
+</head>
+<body>
+	<section>
+		<h1>Index Page</h1>
+		<br>
+
+		<h3 class="text-center">⭐ Explore Category list! ⭐</h3>
+
+		<center>
+			<hr class="divider">
+		</center>
+
+		<br>
+
+		<div class="container">
+
+			<div class="row">
+
+				<div th:each="cd : ${categories}" class="col-md-6 col-lg-3 mb-2">
+
+					<div class="card shadowed-1 h-100 border-0 animation">
+						<div class="card-body">
+							<p>Name: [(${cd.name})]</p>
+							<p>Description: [(${cd.description})]</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+</body>
+</html>

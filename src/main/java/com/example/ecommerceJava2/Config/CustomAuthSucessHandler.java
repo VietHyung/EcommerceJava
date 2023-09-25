@@ -1,5 +1,6 @@
 package com.example.ecommerceJava2.Config;
 
+import com.example.ecommerceJava2.Model.Role;
 import com.example.ecommerceJava2.Model.User;
 import com.example.ecommerceJava2.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,15 +25,15 @@ public class CustomAuthSucessHandler extends SimpleUrlAuthenticationSuccessHandl
 		Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
 
 		CustomUser userDetails = (CustomUser) authentication.getPrincipal();
-		System.out.println(roles.contains("ADMIN"));
-
-		if (userDetails != null) {
-			if (roles.contains("ADMIN")) {
-				response.sendRedirect("/admin/profile");
-			} else {
-				response.sendRedirect("/user/profile");
-			}
-		}
+		System.out.println(roles.contains(Role.ADMIN.toString()));
+		response.sendRedirect("/");
+//		if (userDetails != null) {
+//			if (roles.contains("ADMIN")) {
+//				response.sendRedirect("/admin/profile");
+//			} else {
+//				response.sendRedirect("/user/profile");
+//			}
+//		}
 		super.onAuthenticationSuccess(request, response, authentication);
 	}
 

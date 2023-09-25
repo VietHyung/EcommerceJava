@@ -23,7 +23,7 @@ public class CustomFailureHandler extends SimpleUrlAuthenticationFailureHandler 
 		System.out.println("failure handler");
 		String email = request.getParameter("username");
 
-		super.setDefaultFailureUrl("/signin?error");
+		super.setDefaultFailureUrl("/login?error");
 		super.onAuthenticationFailure(request, response, exception);
 	}
 
