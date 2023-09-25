@@ -138,6 +138,18 @@
 						<li class="nav-item"><a class="nav-link text-white"
 												href="/user/profile"><i
 								class="fa-sharp fa-solid fa-ban text-white"></i>&nbsp;Your Profile</a></li>
+
+						<span th:if="${user.role == 'ROLE_ADMIN'}">
+							<li class="nav-item"><a class="nav-link text-white"
+													href="/user/profile"><i
+									class="fa-sharp fa-solid fa-ban text-white"></i>&nbsp;Create Category</a></li>
+
+							<li class="nav-item"><a class="nav-link text-white"
+													href="/user/profile"><i
+									class="fa-sharp fa-solid fa-ban text-white"></i>&nbsp;Create Product</a></li>
+						</span>
+
+<!--						<li><a href="/myOrders" th:if="${user.role == 'ROLE_CUSTOMER'}" class="dropdown-item" >My Orders</a>-->
 					</ul>
 				</div>
 				<!-- collapse end.// -->
