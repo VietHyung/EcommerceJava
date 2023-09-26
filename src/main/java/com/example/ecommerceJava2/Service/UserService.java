@@ -5,6 +5,7 @@ import com.example.ecommerceJava2.Model.User;
 import org.springframework.http.ResponseEntity;
 
 public interface UserService {
+    public User getUserByEmail(String login);
     public ResponseEntity<Result> getUsers();
 
     public User saveUser(User user, String url);

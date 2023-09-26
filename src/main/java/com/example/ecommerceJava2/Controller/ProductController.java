@@ -41,7 +41,7 @@ public class ProductController {
         return "productDetail";
     }
 
-    @GetMapping("/{categoryId}")
+    @GetMapping("category/{categoryId}")
     public String getProductList(@PathVariable Long categoryId,Model m){
         ResponseEntity<Result> product = productService.getProductsByCategoryId(categoryId);
 

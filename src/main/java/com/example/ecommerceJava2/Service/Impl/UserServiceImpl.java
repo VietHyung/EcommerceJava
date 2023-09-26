@@ -40,6 +40,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByEmail(String login) {
+        return userRepository.findByEmail(login);
+    }
+
+    @Override
     public ResponseEntity<Result> getUsers() {
         List<User> users = userRepository.findAll();
         List<UserDTO> userDTOS = new ArrayList<>();

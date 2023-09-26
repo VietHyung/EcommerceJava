@@ -24,6 +24,11 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public void saveCategory(Category category) {
+        categoryRepository.save(category);
+    }
+
+    @Override
     public List<CategoryDTO> getAllCategories() {
         List<Category> categories = categoryRepository.findAll();
         List<CategoryDTO> categoryDTOS = new ArrayList<>();

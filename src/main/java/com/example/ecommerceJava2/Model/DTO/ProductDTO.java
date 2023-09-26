@@ -17,5 +17,6 @@ public class ProductDTO {
     private Date createdAt;
     private Date updatedAt;
     private String categoryName;
+    private Long categoryId;
 
 }

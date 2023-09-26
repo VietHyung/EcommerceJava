@@ -1,5 +1,6 @@
 package com.example.ecommerceJava2.Service.Impl;
 
+import com.example.ecommerceJava2.Model.Category;
 import com.example.ecommerceJava2.Model.DTO.ProductDTO;
 import com.example.ecommerceJava2.Model.Product;
 import com.example.ecommerceJava2.Model.Result;
@@ -64,5 +65,18 @@ public class ProductServiceImpl implements ProductService {
         } catch (NullPointerException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Result("NOT FOUND PRODUCT", "NOT_FOUND", null));
         }
+    }
+
+    @Override
+    public void saveProduct(ProductDTO productDTO) {
+        Product product = new Product();
+        product.setName(productDTO.getName());
+        product.setDescription(productDTO.getDescription());
+        product.setProductImage(productDTO.getProductImage());
+        product.setPrice(productDTO.getPrice());
+        product.setQuantity(productDTO.getQuantity());
+
+        categoryRepository.findById(productDTO.getCategoryId()).ifPresent(product::setCategory);
+        productRepository.save(product);
     }
 }

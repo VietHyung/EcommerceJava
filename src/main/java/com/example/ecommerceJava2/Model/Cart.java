@@ -20,8 +20,12 @@ public class Cart {
     @Column(name = "cartId")
     private Long cartId;
 
-    @Column(name = "userId")
-    private String userId;
+    @ManyToOne
+    @JoinColumn(name = "userId", referencedColumnName = "user_id")
+    private User user;
+
+//    @Column(name = "userId")
+//    private String userId;
 
     @Column(name = "created_at", nullable = false)
     private Date createdAt;
@@ -39,4 +43,5 @@ public class Cart {
     protected void onUpdate() {
         updatedAt = new Timestamp(System.currentTimeMillis());
     }
+
 }

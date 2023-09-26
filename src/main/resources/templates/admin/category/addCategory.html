@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="base::layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <title> title </title>
+</head>
+<body>
+<section>
+    <h1>Create category Page</h1>
+
+    <div style="width: 50%; margin: 0 auto;">
+        <form th:action="@{/admin/category/save}" th:object="${category}" method="post">
+            <div class="form-group">
+                <label for="name">Tên danh mục:</label>
+                <input type="text" th:field="*{name}" id="name" class="form-control" required/>
+            </div>
+            <div class="form-group">
+                <label for="description">Mô tả:</label>
+                <textarea th:field="*{description}" id="description" class="form-control" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Tạo danh mục</button>
+        </form>
+    </div>
+
+</section>
+</body>
+</html>
+
+
