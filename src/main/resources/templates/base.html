@@ -83,13 +83,21 @@
 								<i class="fa fa-user"></i> <span
 									class="ms-1 d-none d-sm-inline-block">Sign in </span>
 							</a>
-							<button th:unless="${user!=null} and ${user.role == 'ROLE_ADMIN'}" data-bs-toggle="modal" data-bs-target="#cart-modal"
-									class="btn btn-light">
-								<i class="fa fa-shopping-cart"></i> <span class="ms-1">My
-									cart <span
-										class="badge primary-background text-white cart-items">1</span>
+							<a th:unless="${user!=null} and ${user.role == 'ROLE_ADMIN'}"
+							   th:href="@{/cart/myCart}" class="btn btn-light">
+								<i class="fa fa-shopping-cart"></i>
+								<span class="ms-1">
+									My cart <span class="badge primary-background text-white cart-items">1</span>
 								</span>
-							</button>
+							</a>
+
+							<!--							<button th:unless="${user!=null} and ${user.role == 'ROLE_ADMIN'}" data-bs-toggle="modal" data-bs-target="#cart-modal"-->
+<!--									class="btn btn-light">-->
+<!--								<i class="fa fa-shopping-cart"></i> <span class="ms-1">My-->
+<!--									cart <span-->
+<!--										class="badge primary-background text-white cart-items">1</span>-->
+<!--								</span>-->
+<!--							</button>-->
 						</div>
 					</div>
 					<!-- col end.// -->
@@ -129,7 +137,7 @@
 				<div class="collapse navbar-collapse" id="navbar_main">
 					<ul class="navbar-nav">
 						<li class="nav-item"><a class="nav-link text-white"
-												href="/home"><i class="fa-solid fa-house text-white"></i>&nbsp;Home</a></li>
+												href="/"><i class="fa-solid fa-house text-white"></i>&nbsp;Home</a></li>
 <!--						<div th:if="${user!=null}"></div>-->
 						<li class="nav-item"><a class="nav-link text-white"
 												href="/logout"><i

@@ -13,8 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.Collections;
 
 @Service
 @Transactional
@@ -25,6 +24,8 @@ public class CartServiceImpl implements CartService {
 
     @Autowired
     private CartItemRepository cartItemRepository;
+    @Autowired
+    private CartItemService cartItemService;
 
     @Autowired
     private ProductRepository productRepository;
@@ -55,6 +56,23 @@ public class CartServiceImpl implements CartService {
             cartItem.setCart(cart);
         }
         cartItemRepository.save(cartItem);
+    }
+
+    @Override
+    public void updateQuantity(Integer quantity, CartItem cartItem) {
+        CartItem cartItemChange = cartItemService.findCartItemById(cartItem.getCartItemId());
+        cartItemChange.setQuantity(quantity);
+        cartItemRepository.save(cartItemChange);
+    }
+
+    @Override
+    public void removeCartProduct(Long cartItemId) {
+        cartItemRepository.deleteById(cartItemId);
+    }
+
+    @Override
+    public Cart findCartByUserId(Long userId) {
+        return cartRepository.findbyUserId(userId);
     }
 
 }

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="base::layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <title> title </title>
+
+</head>
+<body>
+<section>
+    <h1>Cart Page</h1>
+    <br>
+
+    <!--Shopping cart-->
+    <main class="page">
+        <section class="shopping-cart dark">
+            <div class="container">
+                <div class="block-heading">
+                    <h2>Cart</h2>
+                    <p>this is cart items</p>
+                </div>
+                <div class="content">
+                    <div class="block-heading" th:color="red" th:if="${#lists.isEmpty(cartItems)}">
+                        <h3>Cart empty</h3>
+                        <a th:href="@{'/'}">
+                            <button type="button" class="btn btn-primary">back to home
+                            </button>
+                        </a>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-lg-8">
+                            <div class="items" th:each="basketItem, status: ${cartItems}">
+                                <div class="product" th:with="product = ${basketItem.product}"
+                                     th:id="'row' + ${status.count}">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="ml-2">
+<!--                                                <a class="fas fa-trash link-remove red-text"-->
+<!--                                                   th:rowNumber="${status.count}"-->
+<!--                                                   th:href="@{'/cart/remove/' +${basketItem.cartItemId}}">-->
+<!--                                                </a>-->
+                                                <form th:action="@{'/cart/remove/' + ${basketItem.cartItemId}}" method="post">
+                                                    <button type="submit" class="btn primary-background text-white col-12">remove</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-9 text-center mt-5">
+                                            <div class="info">
+                                                <div class="row">
+                                                    <div class="col-md-5 product-name">
+                                                        <div class="product-name">
+                                                            <a th:text="${product.name}"
+                                                               th:href="@{'/product/detail/' + ${product.productId}}"></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4 quantity" style="text-align: center">
+                                                        <div class="quantity-input"
+                                                             th:replace="/blocks/fragments :: quantity_control(${basketItem.quantity}, ${product.productId},${basketItem.cartItemId})">
+                                                        </div>
+                                                        <div class="subtotal" style="font-weight: 400">
+                                                            <span>x [[${product.price}]]</span><span>VND</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-3 price">
+                                                        <span class="productSubtotalTitle">SubTotal</span>
+                                                        <span class="productSubtotal"
+                                                              style="width:800px; margin:0 auto; font-weight: 500;"
+                                                              th:text="${basketItem.quantity * product.price}"></span><span>VND</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-4" th:unless="${#lists.isEmpty(cartItems)}">
+                            <div class="summary">
+
+                                <h3>Summary</h3>
+                                <div class="summary-item"><span class="text">Total</span>
+                                    <span class="price" id="totalAmount"></span>
+                                </div>
+                                <a th:href="@{'/order/payment'}"
+                                   class="btn btn-primary payment-btn btn-lg btn-block mt-3 text-center">create payment order</a>
+                                <a th:href="@{'/'}" class="d-flex justify-content-center">
+                                    <button type="button"
+                                            class="btn-lg btn-sm mt-3 custom_buttons">back to home
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--Scripts-->
+        <script th:src="@{/js/shopping-cart.js}"></script>
+    </main>
+</section>
+</body>
+</html>

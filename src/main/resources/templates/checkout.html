@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="base::layout(~{::section})">
+<head>
+    <meta charset="UTF-8">
+    <title> title </title>
+
+</head>
+<script th:src="@{/js/shopping-cart.js}"></script>
+<body>
+<section>
+    <h1>Checkout Page</h1>
+    <div class="container">
+        <div class="py-4 left">
+            <h2>Checkout</h2>
+        </div>
+        <div class="row">
+            <div class="custom_product col-md-4 order-md-2 mb-4 sticky-top">
+                <h4 class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-muted">Order item</span>
+                </h4>
+                <ul class="custom_product list-group mb-3 sticky-top">
+                    <div class="items" th:each="basketItem: ${orderBaskets}">
+                        <div class="product" th:with="product = ${basketItem.product}">
+                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                <div>
+                                    <h6 class="my-0">
+                                        <a th:text="${product.name}"
+                                           th:href="@{'/product/detail/' + ${product.productId}}"></a>
+                                    </h6>
+                                    <!--                                <small class="text-muted">[[#{checkout.description}]]</small>-->
+                                </div>
+                                <div class="text-muted">
+                                    <span class="productSubtotal"
+                                          th:id="'subtotal' + ${product.price}"></span><span>VND</span>
+                                </div>
+                            </li>
+                        </div>
+                    </div>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <div class="summary-item"><span class="text">Total: </span>
+                            <span class="price" style="margin-left: 70px; font-size: 21px; font-weight: 500;"
+                                  id="totalAmount"></span>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class=" text-center">
+                            <label for="checkoutBtn" class="btn btn-primary custom_buttons btn-md my-0 p rounded"
+                                   tabindex="0">Checkout</label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-8 order-md-1">
+                <h5 class="mb-4">Contact Detail</h5>
+                <div class="userInfo" th:with="userInfo = ${user}">
+                    <div class="row ml-4">
+                        <div class="col-md-6 mb-3">
+                            <label>Customer Name: </label>
+                            <span th:text="${userInfo.username}"></span>
+                        </div>
+                    </div>
+                    <div class="row ml-4">
+                        <div class="col-md-6 mb-3">
+                            <label>Customer Email: </label>
+                            <span th:text="${userInfo.email}"></span>
+                        </div>
+                    </div>
+                </div>
+                <hr class="mb-4">
+
+                <h5 class="mb-3">Delivery</h5>
+
+                <form th:action="@{/payment}" th:object="${order}" method="post">
+                    <div class="mb-3 ml-4">
+                        <label for="address">Address</label>
+                        <input style="width: 300px;" th:field="*{address}" type="text" class="form-control" id="address"
+                               placeholder="address..." required>
+                        <div class="invalid-feedback">
+                            Invalid
+                        </div>
+                    </div>
+
+                    <div class="mb-3 ml-4">
+                        <label for="city">City</label>
+                        <input style="width: 300px;" th:field="*{city}" type="text" class="form-control" id="city"
+                               placeholder="city..."
+                               required>
+                        <div class="invalid-feedback">
+                            Invalid
+                        </div>
+                    </div>
+
+                    <div class="mb-3 ml-4">
+                        <label for="city">Country</label>
+                        <input style="width: 300px;" th:field="*{country}" type="text" class="form-control" id="country"
+                               placeholder="country..."
+                               required>
+                        <div class="invalid-feedback">
+                            Invalid
+                        </div>
+                    </div>
+
+                    <div class="mb-3 ml-4">
+                        <label for="city">Contact</label>
+                        <input style="width: 300px;" th:field="*{contact}" type="text" class="form-control" id="contact"
+                               placeholder="contact..."
+                               required>
+                        <div class="invalid-feedback">
+                            Invalid
+                        </div>
+                    </div>
+                    <hr class="mb-4">
+                    <input type="submit" id="checkoutBtn" class="d-none"/>
+                </form>
+            </div>
+        </div>
+    </div>
+    <br>
+</section>
+
+
+</body>
+</html>

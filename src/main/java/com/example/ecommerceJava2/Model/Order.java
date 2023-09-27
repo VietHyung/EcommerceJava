@@ -29,7 +29,7 @@ public class Order {
     private OrderStatus status;
 
     @Column(name = "contact")
-    private String contact;
+    private Number contact;
 
     @Column(name = "address")
     private String address;
@@ -39,6 +39,9 @@ public class Order {
 
     @Column(name = "country")
     private String country;
+
+    @Column(name = "totalPrice")
+    private Float totalPrice;
 
     @Column(name = "created_at", nullable = false)
     private Date createdAt;
