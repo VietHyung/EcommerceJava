@@ -6,9 +6,9 @@
     <title> title </title>
 
 </head>
-<script th:src="@{/js/shopping-cart.js}"></script>
 <body>
-<section>
+<main class="page">
+    <section>
     <h1>Checkout Page</h1>
     <div class="container">
         <div class="py-4 left">
@@ -31,8 +31,12 @@
                                     <!--                                <small class="text-muted">[[#{checkout.description}]]</small>-->
                                 </div>
                                 <div class="text-muted">
+                                    <span class="productSubtotal" th:text="${basketItem.quantity}"></span>
+                                </div>
+                                <div class="text-muted">
                                     <span class="productSubtotal"
-                                          th:id="'subtotal' + ${product.price}"></span><span>VND</span>
+                                          th:id="'subtotal' + ${product.productId}"></span><span th:text="${#numbers.formatDecimal(product.price * basketItem.quantity,0, 'COMMA', 0, 'POINT')}"></span><span> VND</span>
+
                                 </div>
                             </li>
                         </div>
@@ -40,7 +44,7 @@
                     <li class="list-group-item d-flex justify-content-between">
                         <div class="summary-item"><span class="text">Total: </span>
                             <span class="price" style="margin-left: 70px; font-size: 21px; font-weight: 500;"
-                                  id="totalAmount"></span>
+                                  id="totalAmount"> 100,000 VND</span>
                         </div>
                     </li>
                     <li class="list-group-item">
@@ -71,7 +75,7 @@
 
                 <h5 class="mb-3">Delivery</h5>
 
-                <form th:action="@{/payment}" th:object="${order}" method="post">
+                <form th:action="@{/payment}" th:object="${order}" method="post"id="orderSubmitionFormId">
                     <div class="mb-3 ml-4">
                         <label for="address">Address</label>
                         <input style="width: 300px;" th:field="*{address}" type="text" class="form-control" id="address"
@@ -104,7 +108,7 @@
                     <div class="mb-3 ml-4">
                         <label for="city">Contact</label>
                         <input style="width: 300px;" th:field="*{contact}" type="text" class="form-control" id="contact"
-                               placeholder="contact..."
+                               placeholder="phone number..."
                                required>
                         <div class="invalid-feedback">
                             Invalid
@@ -113,12 +117,18 @@
                     <hr class="mb-4">
                     <input type="submit" id="checkoutBtn" class="d-none"/>
                 </form>
+                <script>
+                    document.getElementById("checkoutBtn").addEventListener("click", function () {
+                        document.getElementById("orderSubmitionFormId").submit();
+                    });
+                </script>
             </div>
         </div>
     </div>
     <br>
 </section>
-
-
+    <!--Scripts-->
+    <script th:src="@{/js/shopping-cart.js}"></script>
+</main>
 </body>
 </html>

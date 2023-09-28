@@ -21,8 +21,9 @@ public class Order {
     @Column(name = "orderId")
     private Long orderId;
 
-    @Column(name = "userId")
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "userId", referencedColumnName = "user_id")
+    private User user;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")

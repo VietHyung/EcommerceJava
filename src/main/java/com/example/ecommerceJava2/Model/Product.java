@@ -32,7 +32,7 @@ public class Product {
     private String productImage;
 
     @Column(name = "price", nullable = false)
-    private BigDecimal price;
+    private float price;
 
     @Column(name = "quantity", nullable = false)
     private int quantity;

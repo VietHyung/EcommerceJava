@@ -58,14 +58,15 @@
                                                              th:replace="/blocks/fragments :: quantity_control(${basketItem.quantity}, ${product.productId},${basketItem.cartItemId})">
                                                         </div>
                                                         <div class="subtotal" style="font-weight: 400">
-                                                            <span>x [[${product.price}]]</span><span>VND</span>
+                                                            <span>x [[${#numbers.formatDecimal(product.price,0, 'COMMA', 0, 'POINT')}]]</span><span> VND</span>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-3 price">
-                                                        <span class="productSubtotalTitle">SubTotal</span>
+                                                        <span class="productSubtotalTitle">SubTotal:  </span>
                                                         <span class="productSubtotal"
-                                                              style="width:800px; margin:0 auto; font-weight: 500;"
-                                                              th:text="${basketItem.quantity * product.price}"></span><span>VND</span>
+                                                              style="width:900px; margin:0 auto; font-weight: 500;"
+                                                              th:text="${#numbers.formatDecimal(basketItem.quantity * product.price, 0, 'COMMA', 0, 'POINT')}"></span><span> VND</span>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -78,7 +79,7 @@
                             <div class="summary">
 
                                 <h3>Summary</h3>
-                                <div class="summary-item"><span class="text">Total</span>
+                                <div class="summary-item"><span class="text">Total: </span>
                                     <span class="price" id="totalAmount"></span>
                                 </div>
                                 <a th:href="@{'/order/payment'}"

@@ -93,10 +93,24 @@ function updateSubtotal(newSubtotal, productId) {
     $("#subtotal" + productId).text(newSubtotal);
 }
 
+//function updateTotal() {
+//    total = 0.0;
+//    $(".productSubtotal").each(function (index, element) {
+//        total = total + parseFloat(element.innerHTML);
+//    });
+//    $("#totalAmount").text(total + " VND");
+//}
+function formatNumber(number) {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 function updateTotal() {
     total = 0.0;
     $(".productSubtotal").each(function (index, element) {
-        total = total + parseFloat(element.innerHTML);
+        let subtotalValue = element.innerHTML.replace(/,/g, '').replace(' VND', '');
+        total += parseFloat(subtotalValue);
     });
-    $("#totalAmount").text(total + "VND");
+
+    // Định dạng lại giá trị total và gán vào phần tử totalAmount
+    $("#totalAmount").text(formatNumber(total.toFixed(0)) + " VND");
 }

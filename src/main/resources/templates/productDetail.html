@@ -26,12 +26,11 @@
                         <p>Name: [(${product.name})]</p>
                         <p>Description: [(${product.description})]</p>
                         <p>Quantity: [(${product.quantity})]</p>
-                        <p>Price: [(${#numbers.formatDecimal(product.price,
-                            0, 'COMMA', 0, 'POINT')})]</p>
+                        <p>Price: [(${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')})] VND</p>
                         <div class="container text-center">
-                            <button th:unless="${user!=null} and ${user.role == 'ROLE_ADMIN'}" type="button"
-                                    class="btn primary-background text-white col-12">Add to
-                                Cart</button>
+                            <form th:action="@{'/cart/add/' + ${product.productId} + '/' + 1}" method="post">
+                                <button th:unless="${user!=null} and ${user.role == 'ROLE_ADMIN'}" type="submit" class="btn primary-background text-white col-12">Add to Cart</button>
+                            </form>
                         </div>
                     </div>
                 </div>
