@@ -67,11 +67,12 @@ public class OrderController {
         List<CartItem> orderBaskets = cartItemService.findCartItemByCartId(customerCart.getCartId());
         newOrder.setUser(user);
         newOrder.setTotalPrice(orderService.countSum(orderBaskets));
+        newOrder.setStatus(OrderStatus.PENDING);
         try {
             orderService.saveOrder(newOrder);
             attributes.addFlashAttribute("message", "Order was completed! Check your email!");
-            sendVerificationEmail(newOrder);
-        } catch (JpaSystemException | MessagingException | UnsupportedEncodingException ex) {
+//            sendVerificationEmail(newOrder);
+        } catch (JpaSystemException ex){// | MessagingException | UnsupportedEncodingException ex) {
             model.addAttribute("error", ex.getCause().getCause().getMessage());
             return "error/404";
         }
@@ -97,7 +98,7 @@ public class OrderController {
 
         String subject = "Thank you for ordering";
         String senderName = "Store";
-        String mailContent = "<p><b>Order number:</b> " + order.getOrderId() + "</p>";
+        String mailContent = "<p><b>Order number:</b> " + order.getId() + "</p>";
         mailContent += "<p><b>Payment:</b> " + order.getStatus() + "</p>";
         mailContent += "<p><b>Shipping:</b> " + shipping + "</p>";
         mailContent += "<p><b>City:</b> " + order.getCity() + "</p>";

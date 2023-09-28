@@ -54,7 +54,7 @@ public class OrderServiceImpl implements OrderService {
     public Order getOrderByUser(User user) throws OrderNotFoundException {
         Order order = orderRepository.findByUser(user);
         if (order == null) {
-            throw new OrderNotFoundException("Couldn't find any orders with ID " + order.getOrderId());
+            throw new OrderNotFoundException("Couldn't find any orders with ID " + order.getId());
         }
         return order;
     }

@@ -19,7 +19,7 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "orderId")
-    private Long orderId;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "userId", referencedColumnName = "user_id")
@@ -30,7 +30,7 @@ public class Order {
     private OrderStatus status;
 
     @Column(name = "contact")
-    private Number contact;
+    private String contact;
 
     @Column(name = "address")
     private String address;

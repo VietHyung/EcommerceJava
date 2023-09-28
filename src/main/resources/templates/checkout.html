@@ -75,7 +75,7 @@
 
                 <h5 class="mb-3">Delivery</h5>
 
-                <form th:action="@{/payment}" th:object="${order}" method="post"id="orderSubmitionFormId">
+                <form th:action="@{/order/payment}" th:object="${order}" method="post"id="orderSubmitionFormId">
                     <div class="mb-3 ml-4">
                         <label for="address">Address</label>
                         <input style="width: 300px;" th:field="*{address}" type="text" class="form-control" id="address"
@@ -115,7 +115,8 @@
                         </div>
                     </div>
                     <hr class="mb-4">
-                    <input type="submit" id="checkoutBtn" class="d-none"/>
+                    <input type="submit" id="checkoutBtn" class="btn btn-primary">
+<!--                    d-none-->
                 </form>
                 <script>
                     document.getElementById("checkoutBtn").addEventListener("click", function () {
