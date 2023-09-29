@@ -1,5 +1,6 @@
 package com.example.ecommerceJava2.Model.DTO;
 
+import com.example.ecommerceJava2.Model.Category;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -16,7 +17,7 @@ public class ProductDTO {
     private int quantity;
     private Date createdAt;
     private Date updatedAt;
-    private String categoryName;
     private Long categoryId;
+    private Category category;
 
 }

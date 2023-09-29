@@ -27,14 +27,6 @@ public class CustomAuthSucessHandler extends SimpleUrlAuthenticationSuccessHandl
 		CustomUser userDetails = (CustomUser) authentication.getPrincipal();
 		System.out.println(roles.contains(Role.ADMIN.toString()));
 		response.sendRedirect("/");
-//		if (userDetails != null) {
-//			if (roles.contains("ADMIN")) {
-//				response.sendRedirect("/admin/profile");
-//			} else {
-//				response.sendRedirect("/user/profile");
-//			}
-//		}
 		super.onAuthenticationSuccess(request, response, authentication);
 	}
-
 }

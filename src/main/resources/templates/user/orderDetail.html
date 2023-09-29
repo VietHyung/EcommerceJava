@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="base::layout(~{::section})">
+<head>
+  <meta charset="UTF-8">
+  <title> title </title>
+
+</head>
+<body>
+<section>
+  <h1>Order Detail Page</h1>
+  <br>
+  <div class="container mt-4">
+    <div class="row">
+    <div class="col">
+      <br>
+      <h2 class="border-light">Order Details</h2>
+      <table class="table table-striped">
+        <tbody>
+        <tr>
+          <th scope="row">Order ID</th>
+          <td th:text="${order?.id}"></td>
+        </tr>
+        <tr>
+          <th scope="row">Status</th>
+          <td th:text="${order?.status.getOrderStatus()}"></td>
+        </tr>
+        <tr>
+          <th scope="row">Customer Name</th>
+          <td th:text="${order?.user?.username}"></td>
+        </tr>
+        <tr>
+          <th scope="row">Customer Email</th>
+          <td th:text="${order?.user?.email}"></td>
+        </tr>
+        <tr>
+          <th scope="row">Address</th>
+          <td th:text="${order?.address}"></td>
+        </tr>
+        <tr>
+          <th scope="row">City</th>
+          <td th:text="${order?.city}"></td>
+        </tr>
+        <tr>
+          <th scope="row">Country</th>
+          <td th:text="${order?.country}"></td>
+        </tr>
+        <tr>
+          <th scope="row">Total Price</th>
+          <td th:text="${order?.totalPrice} "> VND</td>
+        </tr>
+        <tr>
+          <th scope="row">Created date</th>
+          <td th:text="${order?.createdAt}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  </div>
+
+  <div class="container mt-4">
+    <div class="error-middle" th:if="${#lists.isEmpty(orderItems)}">
+      <h3 class="text-warning">OrderItems Empty!</h3>
+    </div>
+    <div th:if="${message != null}" class="alert alert-success text-center">
+      [[${message}]]
+    </div>
+    <div th:unless="${#lists.isEmpty(orderItems)}">
+      <div class="row">
+        <div class="col table-responsive">
+          <br>
+          <h2 class="border-light">List Product</h2>
+          <table id="tableA" class="table table-striped text-center">
+            <thead>
+            <tr>
+              <th scope="col">Product ID</th>
+              <th scope="col">Product Name</th>
+              <th scope="col">Product Description</th>
+              <th scope="col">Price Per Item</th>
+              <th scope="col">Amount</th>
+              <th scope="col">Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="ordItem : ${orderItems}">
+              <td th:text="${ordItem?.product?.productId}"></td>
+              <td th:text="${ordItem?.product?.name}"></td>
+              <td th:text="${ordItem?.product?.description}"></td>
+              <td th:text="${ordItem?.product?.price}"></td>
+              <td th:text="${ordItem?.quantity}"></td>
+              <td th:text="${ordItem?.quantity * ordItem?.product?.price}"></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <a th:href="@{'/'}">
+      <button type="button" class="btn custom_buttons rounded">Back home</button>
+    </a>
+  </div>
+  <br>
+</section>
+
+
+</body>
+</html>

@@ -10,7 +10,7 @@
     <h1>Create product Page</h1>
 
     <div style="width: 50%; margin: 0 auto;">
-        <form th:action="@{/admin/products/save}" th:object="${product}" method="post">
+        <form th:action="@{/admin/product/save}" th:object="${product}" method="post">
             <div class="form-group">
                 <label for="name">Tên sản phẩm:</label>
                 <input type="text" th:field="*{name}" id="name" class="form-control" required/>

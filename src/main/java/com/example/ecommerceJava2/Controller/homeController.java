@@ -45,15 +45,6 @@ public class homeController {
     @Autowired
     private ProductRepository productRepo;
 
-    @ModelAttribute
-    public void commonUser(Principal p, Model m) {
-        if (p != null) {
-            String email = p.getName();
-            User user = userRepo.findByEmail(email);
-            m.addAttribute("user", user);
-        }
-    }
-
     @GetMapping("/")
     public String index(Model m) {
 

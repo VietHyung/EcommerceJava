@@ -6,15 +6,18 @@ import com.example.ecommerceJava2.Model.Product;
 import com.example.ecommerceJava2.Model.Result;
 import com.example.ecommerceJava2.Repository.CategoryRepository;
 import com.example.ecommerceJava2.Repository.ProductRepository;
+import com.example.ecommerceJava2.Service.CategoryService;
 import com.example.ecommerceJava2.Service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.webjars.NotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -22,61 +25,56 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private CategoryService categoryService;
 
     public ProductServiceImpl(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
     @Override
-    public ResponseEntity<Result> getProductById(Long ProductId) {
+    public Product getProductById(Long productId) {
+        return productRepository.findProductById(productId);
+    }
+
+    @Override
+    public List<Product> getProductsByCategoryId(Long categoryId) {
         try {
-            Product product = productRepository.findById(ProductId).orElseThrow(null);
-            ProductDTO productDTO = new ProductDTO();
-            productDTO.setProductId(product.getProductId());
-            productDTO.setName(product.getName());
-            productDTO.setPrice(product.getPrice());
-            productDTO.setDescription(product.getDescription());
-            productDTO.setCreatedAt(product.getCreatedAt());
-            productDTO.setUpdatedAt(product.getUpdatedAt());
-            productDTO.setCategoryName(String.valueOf(categoryRepository.findById(product.getCategory().getCategoryId()).orElseThrow()));
-            return ResponseEntity.ok(new Result("SUCCESS", "OK", productDTO));
+            return productRepository.findByCategoryId(categoryId);
         } catch (NullPointerException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Result("NOT FOUND PRODUCT", "NOT_FOUND", null));
+            return null;
         }
     }
 
     @Override
-    public ResponseEntity<Result> getProductsByCategoryId(Long categoryId) {
-        try {
-            List<Product> products = productRepository.findByCategoryId(categoryId);
-            List<ProductDTO> productDTOS = new ArrayList<>();
-            for (Product product : products){
-                ProductDTO productDTO = new ProductDTO();
-                productDTO.setProductId(product.getProductId());
-                productDTO.setName(product.getName());
-                productDTO.setPrice(product.getPrice());
-                productDTO.setDescription(product.getDescription());
-                productDTO.setCreatedAt(product.getCreatedAt());
-                productDTO.setUpdatedAt(product.getUpdatedAt());
-                productDTO.setCategoryName(String.valueOf(categoryRepository.findById(product.getCategory().getCategoryId()).orElseThrow()));
-                productDTOS.add(productDTO);
+    public void saveProduct(Product productDTO) {
+        if (productDTO.getProductId() != null) {
+            Product existingProduct = productRepository.findById(productDTO.getProductId()).orElse(null);
+            if (existingProduct != null) {
+                existingProduct.setName(productDTO.getName());
+                existingProduct.setDescription(productDTO.getDescription());
+                existingProduct.setProductImage(productDTO.getProductImage());
+                existingProduct.setPrice(productDTO.getPrice());
+                existingProduct.setQuantity(productDTO.getQuantity());
+
+                existingProduct.setCategory(productDTO.getCategory());
+
+
+                productRepository.save(existingProduct);
+            } else {
+                throw new NotFoundException("Product not found");
             }
-            return ResponseEntity.ok(new Result("SUCCESS", "OK", productDTOS));
-        } catch (NullPointerException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Result("NOT FOUND PRODUCT", "NOT_FOUND", null));
+        } else {
+            Product newProduct = new Product();
+            newProduct.setName(productDTO.getName());
+            newProduct.setDescription(productDTO.getDescription());
+            newProduct.setProductImage(productDTO.getProductImage());
+            newProduct.setPrice(productDTO.getPrice());
+            newProduct.setQuantity(productDTO.getQuantity());
+            newProduct.setCategory(productDTO.getCategory());
+
+            productRepository.save(newProduct);
         }
     }
 
-    @Override
-    public void saveProduct(ProductDTO productDTO) {
-        Product product = new Product();
-        product.setName(productDTO.getName());
-        product.setDescription(productDTO.getDescription());
-        product.setProductImage(productDTO.getProductImage());
-        product.setPrice(productDTO.getPrice());
-        product.setQuantity(productDTO.getQuantity());
-
-        categoryRepository.findById(productDTO.getCategoryId()).ifPresent(product::setCategory);
-        productRepository.save(product);
-    }
 }

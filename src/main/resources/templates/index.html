@@ -27,7 +27,7 @@
 							<p>Name: [(${cd.name})]</p>
 							<p>Description: [(${cd.description})]</p>
 
-							<a th:href="@{/product/category/{id}(id=${cd.categoryId})}" class="btn btn-info col-12 mt-2 mb-2 d-flex justify-content-center">View Details</a>
+							<a th:href="@{/category/{id}(id=${cd.categoryId})}" class="btn btn-info col-12 mt-2 mb-2 d-flex justify-content-center">View Details</a>
 						</div>
 					</div>
 				</div>
@@ -65,7 +65,7 @@
 								<a th:href="@{/product/detail/{id}(id=${p.productId})}" class="btn btn-info col-12 mt-2 mb-2 d-flex justify-content-center">View Details</a>
 							</div>
 
-							<div class="container text-center">
+							<div th:unless="${user!=null and user.role.getRoleName() == 'ROLE_ADMIN'}" class="container text-center">
 								<form th:action="@{'/cart/add/' + ${p.productId} + '/' + 1}" method="post">
 									<button type="submit" class="btn primary-background text-white col-12">Add to Cart</button>
 								</form>

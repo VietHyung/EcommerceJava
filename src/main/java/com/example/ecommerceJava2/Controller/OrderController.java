@@ -2,10 +2,8 @@ package com.example.ecommerceJava2.Controller;
 
 import com.example.ecommerceJava2.Model.*;
 import com.example.ecommerceJava2.Repository.OrderItemRepository;
-import com.example.ecommerceJava2.Service.CartItemService;
-import com.example.ecommerceJava2.Service.CartService;
-import com.example.ecommerceJava2.Service.OrderService;
-import com.example.ecommerceJava2.Service.UserService;
+import com.example.ecommerceJava2.Service.*;
+import com.example.ecommerceJava2.exception.OrderNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -41,6 +39,51 @@ public class OrderController {
     private CartItemService cartItemService;
     @Autowired
     private OrderItemRepository orderItemRepository;
+    @Autowired
+    private OrderItemService orderItemService;
+
+    @GetMapping("/myOrders")
+    public String showOrders(Model model, Principal principal) {
+        if (principal != null) {
+            User user = userService.getUserByEmail(principal.getName());
+            List<Order> orders = orderService.getAllOrdersByUser(user);
+            model.addAttribute("orders", orders);
+        } else {
+            model.addAttribute("error", new NotFoundException("unauthorized"));
+            return "/error/404";
+        }
+        return "/user/orders";
+    }
+
+    @GetMapping("/AllOrders")
+    public String showAllOrders(Model model, Principal principal) {
+        if (principal != null) {
+            List<Order> orders = orderService.getAllOrders();
+            model.addAttribute("orders", orders);
+        } else {
+            model.addAttribute("error", new NotFoundException("unauthorized"));
+            return "/error/404";
+        }
+        return "/user/orders";
+    }
+
+    @GetMapping("/{oid}")
+    public String showOrderDetail(@PathVariable("oid") Long orderId,
+                                  Model model,
+                                  Principal principal) {
+        if (principal != null) {
+            Order order = orderService.getOrder(orderId);
+            User user = order.getUser();
+            List<OrderItem> orderItems = orderItemService.findOrderItemsByOrder(order);
+            model.addAttribute("order", order);
+            model.addAttribute("orderItems", orderItems);
+            model.addAttribute("user", user);
+            return "user/orderDetail";
+        } else {
+            model.addAttribute("error", new NotFoundException("not found"));
+            return "/error/404";
+        }
+    }
 
     @GetMapping("/payment")
     public String createOrders(Model model, Principal principal) {
@@ -70,7 +113,8 @@ public class OrderController {
         newOrder.setStatus(OrderStatus.PENDING);
         try {
             orderService.saveOrder(newOrder);
-            attributes.addFlashAttribute("message", "Order was completed! Check your email!");
+            orderItemService.saveOrderItems(newOrder,orderBaskets);
+            attributes.addFlashAttribute("message", "Order was completed!");
 //            sendVerificationEmail(newOrder);
         } catch (JpaSystemException ex){// | MessagingException | UnsupportedEncodingException ex) {
             model.addAttribute("error", ex.getCause().getCause().getMessage());

@@ -4,6 +4,7 @@ import com.example.ecommerceJava2.Model.Category;
 import com.example.ecommerceJava2.Model.DTO.CategoryDTO;
 import com.example.ecommerceJava2.Repository.CategoryRepository;
 import com.example.ecommerceJava2.Service.CategoryService;
+import com.example.ecommerceJava2.exception.CategoryNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,4 +42,20 @@ public class CategoryServiceImpl implements CategoryService {
         }
         return categoryDTOS;
     }
+
+    @Override
+    public void deleteCategory(int id) throws CategoryNotFoundException {
+
+    }
+
+    @Override
+    public Category getCategory(Long id) {
+        return null;
+    }
+
+    @Override
+    public Category findCategoryById(Long id) {
+        return categoryRepository.findCategoryById(id);
+    }
+
 }

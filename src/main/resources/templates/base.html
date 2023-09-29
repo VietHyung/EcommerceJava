@@ -73,8 +73,7 @@
 									Hello <span class="ms-1 d-none d-sm-inline-block">[(${user.username})]</span>
 								</button>
 								<ul class="dropdown-menu">
-									<li><a href="/admin/home" th:if="${user.role == 'ROLE_ADMIN'}" class="dropdown-item" >Admin Panel</a>
-									<li><a href="/myOrders" th:if="${user.role == 'ROLE_CUSTOMER'}" class="dropdown-item" >My Orders</a>
+									<li><a href="/admin/home" th:if="${user.role.getRoleName() == 'ROLE_ADMIN'}" class="dropdown-item" >Admin Panel</a>
 									<li><a class="dropdown-item" href="/profile">Profile Setting</a></li>
 									<li><a class="dropdown-item" href="/logout">Logout</a></li>
 								</ul>
@@ -83,7 +82,7 @@
 								<i class="fa fa-user"></i> <span
 									class="ms-1 d-none d-sm-inline-block">Sign in </span>
 							</a>
-							<a th:unless="${user!=null} and ${user.role == 'ROLE_ADMIN'}"
+							<a th:unless="${user!=null} and ${user.role.getRoleName() == 'ROLE_ADMIN'}"
 							   th:href="@{/cart/myCart}" class="btn btn-light">
 								<i class="fa fa-shopping-cart"></i>
 								<span class="ms-1">
@@ -91,7 +90,7 @@
 								</span>
 							</a>
 
-							<!--							<button th:unless="${user!=null} and ${user.role == 'ROLE_ADMIN'}" data-bs-toggle="modal" data-bs-target="#cart-modal"-->
+							<!--							<button th:unless="${user!=null} and ${user.role.getRoleName() == 'ROLE_ADMIN'}" data-bs-toggle="modal" data-bs-target="#cart-modal"-->
 <!--									class="btn btn-light">-->
 <!--								<i class="fa fa-shopping-cart"></i> <span class="ms-1">My-->
 <!--									cart <span-->
@@ -138,26 +137,37 @@
 					<ul class="navbar-nav">
 						<li class="nav-item"><a class="nav-link text-white"
 												href="/"><i class="fa-solid fa-house text-white"></i>&nbsp;Home</a></li>
-<!--						<div th:if="${user!=null}"></div>-->
-						<li class="nav-item"><a class="nav-link text-white"
+						<li class="nav-item" th:unless="${user==null}"><a class="nav-link text-white"
 												href="/logout"><i
 								class="fa-solid fa-address-card text-white"></i>&nbsp;Log out</a></li>
 
-						<li class="nav-item"><a class="nav-link text-white"
+						<li class="nav-item" th:unless="${user==null}"><a class="nav-link text-white"
 												href="/user/profile"><i
 								class="fa-sharp fa-solid fa-ban text-white"></i>&nbsp;Your Profile</a></li>
 
-<!--						<span th:if="${user.role == 'ROLE_ADMIN'}">-->
-							<li class="nav-item"><a class="nav-link text-white"
-													href="/admin/category/new"><i
-									class="fa-sharp fa-solid fa-ban text-white"></i>&nbsp;Create Category</a></li>
+						<li class="nav-item" th:if="${user!=null and user.role.getRoleName() == 'ROLE_CUSTOMER'}"><a class="nav-link text-white"
+																		  href="/order/myOrders"><i
+								class="fa-sharp fa-solid fa-ban text-white"></i>&nbsp;My Orders</a></li>
 
-							<li class="nav-item"><a class="nav-link text-white"
-													href="/admin/products/new"><i
-									class="fa-sharp fa-solid fa-ban text-white"></i>&nbsp;Create Product</a></li>
-<!--						</span>-->
+						<li class="nav-item" th:if="${user!=null and user.role.getRoleName() == 'ROLE_ADMIN'}">
+							<a class="nav-link text-white" href="/order/AllOrders">
+								<i class="fa-sharp fa-solid fa-ban text-white"></i>&nbsp;All Orders
+							</a>
+						</li>
 
-<!--						<li><a href="/myOrders" th:if="${user.role == 'ROLE_CUSTOMER'}" class="dropdown-item" >My Orders</a>-->
+						<li class="nav-item" th:if="${user!=null and user.role.getRoleName() == 'ROLE_ADMIN'}">
+							<a class="nav-link text-white" href="/admin/category/new">
+								<i class="fa-sharp fa-solid fa-ban text-white"></i>&nbsp;Create Category
+							</a>
+						</li>
+
+						<li class="nav-item" th:if="${user!=null and user.role.getRoleName() == 'ROLE_ADMIN'}">
+							<a class="nav-link text-white" href="/admin/products/new">
+								<i class="fa-sharp fa-solid fa-ban text-white"></i>&nbsp;Create Product
+							</a>
+						</li>
+
+<!--						<li><a href="/myOrders" th:if="${user.role.getRoleName() == 'ROLE_CUSTOMER'}" class="dropdown-item" >My Orders</a>-->
 					</ul>
 				</div>
 				<!-- collapse end.// -->

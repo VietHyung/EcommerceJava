@@ -27,10 +27,15 @@
                         <p>Description: [(${product.description})]</p>
                         <p>Quantity: [(${product.quantity})]</p>
                         <p>Price: [(${#numbers.formatDecimal(product.price, 0, 'COMMA', 0, 'POINT')})] VND</p>
-                        <div class="container text-center">
+                        <div th:unless="${user!=null and user.role.getRoleName() == 'ROLE_ADMIN'}" class="container text-center">
                             <form th:action="@{'/cart/add/' + ${product.productId} + '/' + 1}" method="post">
-                                <button th:unless="${user!=null} and ${user.role == 'ROLE_ADMIN'}" type="submit" class="btn primary-background text-white col-12">Add to Cart</button>
+                                <button type="submit" class="btn primary-background text-white col-12">Add to Cart</button>
                             </form>
+                        </div>
+                        <div class="container text-center" th:if="${user!=null and user.role.getRoleName() == 'ROLE_ADMIN'}">
+                            <a class="nav-link btn primary-background text-white" th:href="@{'/admin/product/edit/'+ ${product.productId}}">
+                                <i class="fa-sharp fa-solid "></i>&nbsp;Update Product
+                            </a>
                         </div>
                     </div>
                 </div>

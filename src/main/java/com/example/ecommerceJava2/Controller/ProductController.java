@@ -1,6 +1,7 @@
 package com.example.ecommerceJava2.Controller;
 
 import com.example.ecommerceJava2.Model.DTO.CategoryDTO;
+import com.example.ecommerceJava2.Model.DTO.ProductDTO;
 import com.example.ecommerceJava2.Model.Product;
 import com.example.ecommerceJava2.Model.Result;
 import com.example.ecommerceJava2.Repository.CategoryRepository;
@@ -28,32 +29,8 @@ public class ProductController {
 
     @GetMapping("/detail/{productId}")
     public String getProductDetail(@PathVariable Long productId,Model m){//@PathVariable Long productId, Model model) {
-        ResponseEntity<Result> product = productService.getProductById(productId);
-
-//        if (product.getStatusCode() == HttpStatus.NOT_FOUND) {
-//            model.addAttribute("error", "Product not found");
-//            return "error";
-//        }
-//
-//        model.addAttribute("product", product.getBody().getData());
-
-        m.addAttribute("product", product.getBody().getData());
+        Product product = productService.getProductById(productId);
+        m.addAttribute("product", product);
         return "productDetail";
     }
-
-    @GetMapping("category/{categoryId}")
-    public String getProductList(@PathVariable Long categoryId,Model m){
-        ResponseEntity<Result> product = productService.getProductsByCategoryId(categoryId);
-
-//        if (product.getStatusCode() == HttpStatus.NOT_FOUND) {
-//            model.addAttribute("error", "Product not found");
-//            return "error";
-//        }
-//
-//        model.addAttribute("product", product.getBody().getData());
-
-        m.addAttribute("products", product.getBody().getData());
-        return "productList";
-    }
-
 }
