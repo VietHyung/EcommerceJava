@@ -70,6 +70,10 @@
 									<button type="submit" class="btn primary-background text-white col-12">Add to Cart</button>
 								</form>
 							</div>
+
+							<div class="container text-center" th:if="${user!=null and user.role.getRoleName() == 'ROLE_ADMIN'}">
+								<a th:href="@{/admin/product/delete/{id}(id=${p.productId})}" class="btn btn-info col-12 mt-2 mb-2 d-flex justify-content-center">Delete this product</a>
+							</div>
 						</div>
 					</div>
 				</div>

@@ -41,6 +41,18 @@ public class AdminController {
         return "redirect:/";
     }
 
+    @GetMapping("/product/delete/{id}")
+    public String deleteProduct(@PathVariable(name = "id") Long productId, RedirectAttributes redirect) {
+        try {
+            productService.deleteProduct(productId);
+            redirect.addFlashAttribute("message",
+                    "The product ID " + productId + " has been deleted successfully");
+        } catch (ProductNotFoundException e) {
+            redirect.addFlashAttribute("message", e.getMessage());
+        }
+        return "redirect:/";
+    }
+
     @GetMapping("/category/new")
     public String addCategory(Model model) {
         CategoryDTO category = new CategoryDTO();

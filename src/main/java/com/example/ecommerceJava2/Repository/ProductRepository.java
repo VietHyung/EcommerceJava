@@ -20,4 +20,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 	@Query(value = "SELECT * FROM products WHERE product_id = :productId", nativeQuery = true)
 	Product findProductById(Long productId);
 
+	@Query(value = "SELECT COUNT(*) FROM products WHERE product_id = :productId", nativeQuery = true)
+	Long countById(Long productId);
+
 }

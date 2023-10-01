@@ -8,6 +8,7 @@ import com.example.ecommerceJava2.Repository.CategoryRepository;
 import com.example.ecommerceJava2.Repository.ProductRepository;
 import com.example.ecommerceJava2.Service.CategoryService;
 import com.example.ecommerceJava2.Service.ProductService;
+import com.example.ecommerceJava2.exception.ProductNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -75,6 +76,15 @@ public class ProductServiceImpl implements ProductService {
 
             productRepository.save(newProduct);
         }
+    }
+
+    @Override
+    public void deleteProduct(Long productId) throws ProductNotFoundException {
+        Long countById = productRepository.countById(productId);
+        if (countById == null || countById == 0) {
+            throw new ProductNotFoundException("Couldn't find any product with ID " + productId);
+        }
+        productRepository.deleteById(productId);
     }
 
 }
