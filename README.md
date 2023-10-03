@@ -1,8 +1,6 @@
 # EcommerceJava
 # Chức năng chung:
 Đăng nhập, Đăng ký, Đăng xuất: Cho phép người dùng quản lý tài khoản cá nhân.
-![image](https://github.com/VietHyung/EcommerceJava/assets/93813803/fbdbdef3-64fe-434a-aeb8-5bfbb52b00f7)
-![image](https://github.com/VietHyung/EcommerceJava/assets/93813803/15ac5ed3-2f91-4db3-93df-f99b331364bb)
 [screen-capture.webm](https://github.com/VietHyung/EcommerceJava/assets/93813803/09af9770-537c-4bb7-9f3d-7a9f12caf41e)
 
 Xem thông tin Category và Product: Hiển thị danh sách danh mục và sản phẩm.
